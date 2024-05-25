@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PRISMA</title>
+  </head>
+  <body>
+    <div id="pulpits"></div>
+
+    <div id="pagination"></div>
+
+    <script>
+      let fetchData
+      function pulpits() {
+        fetch('api/htmlapi')
+          .then((response) => response.json())
+          .then((data) => {
+            fetchData = data
+            console.log(fetchData)
+            renderPulpits(1, 10, fetchData)
+            renderPagination(Math.ceil(fetchData.length / 10))
+          })
+          .catch((error) => console.error(error))
+      }
+
+      function renderPulpits(pageNumber, pageSize, pulpits) {
+        const startIndex = (pageNumber - 1) * pageSize
+        const endIndex = startIndex + pageSize
+        const pulpitsToShow = pulpits.slice(startIndex, endIndex)
+
+        const pulpitsElement = document.getElementById('pulpits')
+        pulpitsElement.innerHTML = ''
+
+        pulpitsToShow.forEach((pulpit, index) => {
+          const pulpitIndex = startIndex + index + 1
+          const pulpitInfo = `${pulpitIndex}. PULPIT: ${pulpit.PULPIT} || PULPIT_NAME ${pulpit.PULPIT_NAME} || FACULTY ${pulpit.FACULTY} || COUNT TEACHERS: ${pulpit._count.TEACHER_TEACHER_PULPITToPULPIT}`
+          const pulpitNode = document.createElement('p')
+          pulpitNode.textContent = pulpitInfo
+          pulpitsElement.appendChild(pulpitNode)
+        })
+      }
+
+      function renderPagination(totalPages) {
+        const paginationElement = document.getElementById('pagination')
+        paginationElement.innerHTML = ''
+
+        for (let i = 1; i <= totalPages; i++) {
+          const button = document.createElement('button')
+          button.textContent = i
+          button.addEventListener('click', () => {
+            renderPulpits(i, 10, fetchData)
+          })
+          paginationElement.appendChild(button)
+        }
+      }
+
+      pulpits()
+    </script>
+  </body>
+</html>

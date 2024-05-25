@@ -1,0 +1,28 @@
+Resource
+1) openssl genrsa -out RS.key 2048
+2) openssl req -new -key RS.key -out RS.csr -sha256 -config RS.cfg
+
+CA
+1) openssl genrsa -out CA.key 2048
+2) openssl req -x509 -new -key CA.key -subj "/CN=CA-LAB20-PEV" -days 700 -sha256 -out CA.crt
+
+
+3) openssl x509 -req -in RS.csr -CA CA.crt -CAkey CA.key -CAcreateserial -out RS.crt -days 365 -sha256 -extensions v3_req -extfile RS.cfg
+
+как происходит проверка сертификата
+что такое самоподписанный сертификат
+как проверяется подпись
+ради чего создаётся сертификат
+что такое шифр набор
+на каком этапе TLS рукопожатие происходит шифронабор
+зачем он используется
+что туда входит
+
+
+
+
+
+
+
+
+

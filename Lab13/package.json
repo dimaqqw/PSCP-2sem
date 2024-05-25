@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "node ./13-01.js"
+  },
+  "dependencies": {
+    "sequelize": "^6.37.1",
+    "tedious": "^16.7.0"
+  }
+}

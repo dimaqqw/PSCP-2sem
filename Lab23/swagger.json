@@ -1,0 +1,194 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Телефонный справочник LAB23",
+    "description": "REST API сервис для доступа к данным телефонного справочника",
+    "contact": {
+      "name": "Denisenko Dmitriy",
+      "email": "dimaaqqw@mail.ru",
+      "url": "https://github.com/dimaqqw"
+    }
+  },
+  "paths": {
+    "/TS": {
+      "get": {
+        "summary": "Получить все контакты",
+        "responses": {
+          "200": {
+            "description": "Список всех контактов",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Имя",
+                    "number": "1234567890"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Другое имя",
+                    "number": "0987654321"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Добавить новый контакт",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "id": 3,
+                  "name": "Еще одно имя",
+                  "number": "7777777777"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Контакт успешно добавлен",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 3,
+                  "name": "Еще одно имя",
+                  "number": "7777777777"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некорректный запрос"
+          }
+        }
+      }
+    },
+    "/TS/{id}": {
+      "get": {
+        "summary": "Получить контакт по ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Контакт найден",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Имя",
+                  "number": "1234567890"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Контакт не найден"
+          }
+        }
+      },
+      "put": {
+        "summary": "Обновить контакт",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Обновленное имя",
+                  "number": "9999999999"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Контакт успешно обновлен",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Обновленное имя",
+                  "number": "9999999999"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некорректный запрос"
+          },
+          "404": {
+            "description": "Контакт не найден"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Удалить контакт",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Контакт успешно удален"
+          },
+          "404": {
+            "description": "Контакт не найден"
+          }
+        }
+      }
+    }
+  }
+}
